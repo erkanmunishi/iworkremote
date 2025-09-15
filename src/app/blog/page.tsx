@@ -1,3 +1,9 @@
+
+
+export const runtime = "nodejs";     // ensure Node runtime, not Edge
+export const dynamic = "force-static"; // generate at build (safe for blog posts)
+
+
 import Link from "next/link";
 import { getAllPosts } from "@/lib/mdx";
 

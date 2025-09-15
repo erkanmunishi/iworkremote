@@ -1,3 +1,8 @@
+
+export const runtime = "nodejs";     // ensure Node runtime, not Edge
+export const dynamic = "force-static"; // generate at build (safe for blog posts)
+
+
 import { notFound } from "next/navigation";
 import { getAllPosts } from "@/lib/mdx";
 import { MDXRemote } from "next-mdx-remote/rsc";
