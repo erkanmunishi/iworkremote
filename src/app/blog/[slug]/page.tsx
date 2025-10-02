@@ -23,9 +23,11 @@ export default async function PostPage({
   if (!post) return notFound();
 
   return (
-    <article className="mx-auto max-w-3xl px-4 py-12 prose">
-      <h1>{post.title}</h1>
-      <MDXRemote source={post.content} />
-    </article>
+    // replace your article wrapper with this:
+<article className="container py-12 prose prose-slate md:prose-lg prose-headings:font-display">
+  <h1>{post.title}</h1>
+  <MDXRemote source={post.content} />
+</article>
+
   );
 }

@@ -3,14 +3,16 @@ import Link from "next/link";
 
 export function SiteHeader() {
   return (
-    <header className="border-b bg-white/70 backdrop-blur">
-      <div className="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="font-semibold">I Work Remote</Link>
-        <nav className="flex items-center gap-6 text-sm">
-          <Link href="/chapters">City Chapters</Link>
-          <Link href="/membership">Membership</Link>
-          <Link href="/blog">Blog</Link>
-          <a href="#subscribe" className="px-3 py-1 rounded-lg border">Subscribe</a>
+    <header className="sticky top-0 z-50 border-b bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+      <div className="mx-auto max-w-screen-2xl px-6 h-14 flex items-center justify-between">
+        <Link href="/" className="font-semibold tracking-tight">I Work Remote</Link>
+        <nav className="flex items-center gap-6 text-[14px]">
+          <Link href="/chapters" className="hover:underline">City Chapters</Link>
+          <Link href="/membership" className="hover:underline">Membership</Link>
+          <Link href="/blog" className="hover:underline">Blog</Link>
+          <a href="#subscribe" className="px-3 py-1 rounded-xl border hover:bg-white shadow-soft transition">
+            Subscribe
+          </a>
         </nav>
       </div>
     </header>
