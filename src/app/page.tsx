@@ -1,109 +1,97 @@
-import { NewsletterForm } from "@/components/newsletter-form";
-import { Users, Calendar, Globe, MapPin, Sparkles } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { NewsletterForm } from "@/components/newsletter-form";
 
 export const metadata = { title: "Home" };
 
 export default function HomePage() {
   return (
-    <div className="mx-auto max-w-screen-2xl px-6">
-      {/* HERO — 12-col grid */}
-      <section className="relative mx-auto max-w-screen-2xl px-6">
-  {/* Background image fills the whole hero */}
-  <div className="relative overflow-hidden rounded-3xl border shadow-soft">
-    {/* the image */}
-    <Image
-      src="/hero.jpg"                 // use "/hero.jpeg" if that's your file
-      alt="Remote workers meeting and co-working"
-      fill
-      priority
-      sizes="100vw"
-      className="object-cover"
-    />
+    <div className="mx-auto max-w-none">
+      {/* HERO — full-bleed background */}
+      <section className="relative w-full overflow-hidden">
+        {/* background image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/hero.jpg"              // keep your file name here
+            alt="I Work Remote community"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+          {/* dark overlay for readable text */}
+          <div className="absolute inset-0 bg-black/35" />
+        </div>
 
-    {/* soft overlay so text stays readable (keeps photo visible on both sides) */}
-    <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r
-                    from-white/80 via-white/30 to-white/70" />
-
-    {/* Content on top of the image */}
-    <div className="relative z-10 px-6 py-12 md:px-12 md:py-16">
-      <div className="grid grid-cols-12 gap-8">
-        <div className="col-span-12 md:col-span-7">
-          <span className="inline-flex items-center gap-2 rounded-full badge-soft px-2.5 py-1 text-xs text-slate-700 shadow-soft">
-            <Sparkles className="h-3.5 w-3.5" /> #1 Remote Work Community in the US
-          </span>
-
-          <h1 className="mt-4 font-display text-5xl md:text-6xl font-extrabold tracking-tight">
-            Work from anywhere.<br className="hidden md:block" />
-            Find your people.
-          </h1>
-
-          <p className="mt-4 text-lg text-slate-700 max-w-prose">
-            Chapters, meetups, and resources that help remote workers level up their careers and lifestyle.
-          </p>
-
-          <div className="mt-6 flex flex-wrap gap-3">
-            <a href="/chapters" className="btn-brand inline-flex items-center justify-center rounded-xl px-5 py-3 transition shadow-soft">
-              Explore Chapters
-            </a>
-            <a href="/membership" className="inline-flex items-center justify-center rounded-xl px-5 py-3 border bg-white/90 hover:bg-white transition shadow-soft">
-              Membership
-            </a>
-          </div>
-
-          <div className="mt-6 max-w-md">
-            <NewsletterForm />
+        {/* content */}
+        <div className="relative z-10 mx-auto max-w-screen-2xl px-6">
+          <div className="flex min-h-[56vh] md:min-h-[68vh] items-center justify-center md:justify-start">
+            <div className="text-center md:text-left">
+              <h2 className="text-white/90 text-sm tracking-widest">
+                #1 Remote Work Community in the US
+              </h2>
+              <h1 className="mt-4 font-display text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white">
+                Work from anywhere.<br className="hidden md:block" />
+                Find your people.
+              </h1>
+              <div className="mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
+                <Link
+                  href="/membership"
+                  className="btn-brand inline-flex items-center justify-center rounded-xl px-5 py-3 transition shadow-soft"
+                >
+                  Join the Community
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
-        {/* Right side stays empty; image is visible there */}
-        <div className="col-span-5 hidden md:block" />
-      </div>
-    </div>
-  </div>
-</section>
 
-      {/* FEATURE STRIP — spans full width; more dense */}
-      <section className="pb-14">
-        <div className="grid grid-cols-12 gap-6">
-          <FeatureCard className="col-span-12 md:col-span-4"
-            title="Local Chapters" icon={<Users className="h-5 w-5" />}
-            desc="Join peers near you. Real connections—not just Slack." />
-          <FeatureCard className="col-span-12 md:col-span-4"
-            title="Events & Meetups" icon={<Calendar className="h-5 w-5" />}
-            desc="Sharpen skills, find roles, and share wins together." />
-          <FeatureCard className="col-span-12 md:col-span-4"
-            title="Member Resources" icon={<Globe className="h-5 w-5" />}
-            desc="Curated guides, templates, and perks for remote life." />
+        {/* subtle bottom fade to page background */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-white" />
+      </section>
+
+      {/* ABOUT SECTION */}
+      <section className="mx-auto max-w-screen-xl px-6 py-12 md:py-16">
+        <h3 className="text-center font-display text-xl tracking-[.2em] text-slate-700">
+          ABOUT IWORKREMOTE
+        </h3>
+        <div className="mt-2 flex justify-center">
+          <span className="inline-block h-[2px] w-20 bg-[color:var(--warm-border)] rounded-full" />
+        </div>
+        <div className="mt-6 text-center mx-auto max-w-4xl text-[15px] leading-7 text-slate-600">
+          <p>
+            iWorkRemote is a community for remote professionals and hybrid workers who
+            value flexibility and connection. While our meetups are held across the US,
+            our network includes members from diverse locations—many of whom work remotely
+            from various parts of the country and beyond.
+          </p>
+          <p className="mt-4">
+            We host exclusive events, coworking sessions, and networking meetups designed
+            to foster professional growth and collaboration. Whether you’re a seasoned
+            remote worker or just beginning your journey, our community offers a supportive
+            environment to share best practices, discover new opportunities, and build
+            lasting connections.
+          </p>
+        </div>
+      </section>
+
+      {/* SUBSCRIBE BAND (full-width footer bar) */}
+      <section className="w-full border-t bg-[color:var(--warm)] border-[color:var(--warm-border)] text-[color:var(--warm-ink)]">
+        <div className="mx-auto max-w-screen-xl px-6 py-10">
+          <div className="grid gap-6 md:grid-cols-2 md:items-center">
+            <div>
+              <h4 className="font-semibold text-slate-800">Subscribe to our emails</h4>
+              <p className="text-sm text-slate-600 mt-1">
+                Get event announcements and member resources in your inbox.
+              </p>
+            </div>
+            <div className="max-w-md md:ml-auto">
+              {/* Replace alert in NewsletterForm with Beehiiv action when ready */}
+              <NewsletterForm />
+            </div>
+          </div>
         </div>
       </section>
     </div>
   );
 }
-
-function InfoCard({
-  icon, title, text,
-}: { icon: React.ReactNode; title: string; text: React.ReactNode; }) {
-  return (
-    <div className="rounded-xl border bg-white p-4 shadow-soft">
-      <div className="flex items-center gap-2 text-slate-800">
-        {icon}<b>{title}</b>
-      </div>
-      <p className="mt-1 text-sm text-slate-600">{text}</p>
-    </div>
-  );
-}
-
-function FeatureCard({
-  title, desc, icon, className = "",
-}: { title: string; desc: string; icon: React.ReactNode; className?: string; }) {
-  return (
-    <div className={`rounded-xl border bg-white p-5 shadow-soft ${className}`}>
-      <div className="flex items-center gap-2">
-        {icon}
-        <h3 className="font-semibold">{title}</h3>
-      </div>
-      <p className="mt-1 text-sm text-slate-600">{desc}</p>
-    </div>
-  );
-}
-

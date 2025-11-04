@@ -1,4 +1,5 @@
 import { MapPin, Users } from "lucide-react";
+import Link from "next/link";
 
 export const metadata = { title: "City Chapters" };
 
@@ -7,16 +8,16 @@ type Chapter = {
   state?: string;
   lead: string;
   members?: number;
-  link: string;          // events / join link
+  link: string | null;          // events / join link
 };
 
 const chapters: Chapter[] = [
-  { city: "Tampa", state: "FL", lead: "Erkan", members: 180, link: "https://lu.ma/iworkremote" },
-  { city: "Orlando", state: "FL", lead: "TBD", members: 0, link: "#" },
-  { city: "San Francisco", state: "CA", lead: "TBD", members: 0, link: "#" },
-  { city: "Austin", state: "TX", lead: "TBD", members: 0, link: "#" },
-  { city: "New York", state: "NY", lead: "TBD", members: 0, link: "#" },
-  { city: "Chicago", state: "IL", lead: "TBD", members: 0, link: "#" },
+  { city: "Tampa", state: "FL", lead: "Erkan Munishi", members: 180, link: "/chapters/tampa" },
+  { city: "Orlando", state: "FL", lead: "TBD", members: 0, link: null },
+  { city: "Miami", state: "FL", lead: "TBD", members: 0, link: null },
+  { city: "Austin", state: "TX", lead: "TBD", members: 0, link: null },
+  { city: "New York", state: "NY", lead: "TBD", members: 0, link: null },
+  { city: "Chicago", state: "IL", lead: "TBD", members: 0, link: null },
 ];
 
 export default function ChaptersPage() {
@@ -46,7 +47,7 @@ function ChapterCard({
   className?: string;
 }) {
   const { city, state, lead, members = 0, link } = chapter;
-  const hasEvents = link && link !== "#";
+  const hasEvents = !!link;
 
   return (
     <div className={`rounded-2xl border bg-white p-5 shadow-soft ${className}`}>
@@ -58,7 +59,7 @@ function ChapterCard({
             {state ? `, ${state}` : ""}
           </h3>
         </div>
-        {members > 0 && (
+        {!!members  && (
           <span className="inline-flex items-center gap-1 rounded-full badge-soft px-2 py-0.5 text-xs">
             <Users className="h-3.5 w-3.5" /> {members}
           </span>
@@ -71,13 +72,12 @@ function ChapterCard({
 
       <div className="mt-4 flex items-center gap-3">
         {hasEvents ? (
-          <a
-            href={link}
-            target="_blank"
-            className="btn-brand inline-flex items-center justify-center rounded-xl px-3 py-2 text-sm transition shadow-soft"
-          >
-            Events / Join
-          </a>
+          <Link
+          href={link!}
+          className="btn-brand inline-flex items-center justify-center rounded-xl px-3 py-2 text-sm transition shadow-soft"
+        >
+          Events / Join
+        </Link>
         ) : (
           <span className="inline-flex items-center justify-center rounded-xl px-3 py-2 text-sm border bg-slate-50 text-slate-400 shadow-soft cursor-not-allowed">
             Events / Join
@@ -85,9 +85,12 @@ function ChapterCard({
         )}
 
         {/* normal link; no event handler */}
-        <a href="/membership" className="link-brand text-sm">
-          Become a chapter lead →
-        </a>
+        {(!lead || lead === "TBD") && (
+          <a href="/membership" className="link-brand text-sm">
+            Become a chapter lead →
+          </a>
+        )}
+
       </div>
     </div>
   );

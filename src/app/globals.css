@@ -44,3 +44,13 @@ body {
 .link-brand:hover{
   text-decoration: underline;
 }
+
+:root{
+  /* tweak these until it feels perfect */
+  --warm: #f5e6d3;           /* background (beige) */
+  --warm-border: #e7d7c2;    /* subtle border on warm surfaces */
+  --warm-ink: #262626;       /* text on warm bg */
+}
+
+/* Full-bleed helper: makes a block span the whole viewport width */
+.bleed { margin-inline: calc(50% - 50vw); width: 100vw; }

@@ -16,11 +16,22 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
-      <body className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-900 antialiased flex flex-col">
-        <SiteHeader />
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
+    <html lang="en">
+      {/* Make the whole page a flex column that fills the screen */}
+      <body className="min-h-screen bg-white text-slate-900">
+        <div className="flex min-h-screen flex-col">
+          <SiteHeader />
+
+          {/* This lets the main content expand and pushes the footer down */}
+          <main className="flex-1">
+            {children}
+          </main>
+
+          {/* mt-auto ensures the footer sits at the bottom when content is short */}
+          <footer className="mt-auto">
+            <SiteFooter />
+          </footer>
+        </div>
       </body>
     </html>
   );
