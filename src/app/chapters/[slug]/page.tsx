@@ -33,7 +33,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
       {/* HERO — full-bleed background like homepage */}
 <section className="relative bleed">
   {/* background image */}
-  <div className="absolute inset-0">
+  <div className="absolute inset-0 pointer-events-none">
     <Image
       src={city.hero.image}
       alt={city.cityName}
@@ -84,12 +84,23 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
       <section className="py-10 md:py-12">
         <div className="grid grid-cols-12 gap-8">
           <div className="col-span-12 md:col-span-8">
-            {city.summary && (
-              <p className="text-[15px] leading-7 text-slate-700">
-                {city.summary}
-              </p>
-            )}
+          {slug === "tampa" ? (
+        <p className="text-[15px] leading-7 text-slate-700">
+          At <strong>iWorkRemote Tampa Bay</strong>, our events are curated exclusively for
+          <strong> remote workers</strong>. Membership is by <strong>invitation only</strong> — ensuring a
+          <strong> close-knit community</strong> of seasoned remote workers. However, if you’re an aspiring
+          remote worker or hybrid professional, our <strong>open brunch meetups</strong> are the perfect
+          introduction. Experience our vibrant community firsthand at brunch, and you might
+          soon <strong>be invited to join</strong> our exclusive dinners, outdoor activities, and
+          coworking sessions for <strong>deeper networking</strong> and special perks.
+        </p>
+      ) : (
+        city.summary && (
+          <p className="text-[15px] leading-7 text-slate-700">{city.summary}</p>
+        )
+      )}
           </div>
+
           <div className="col-span-12 md:col-span-4">
             <div className="rounded-2xl border bg-white p-5 shadow-soft">
               <div className="text-sm text-slate-600">Lead</div>
@@ -116,13 +127,24 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
             {city.events.map(ev => (
               <div key={ev.name} className="col-span-12 sm:col-span-6 lg:col-span-3">
                 <div className="rounded-2xl border bg-white overflow-hidden shadow-soft">
-                  {ev.image ? (
-                    <div className="relative aspect-[4/3]">
-                      <Image src={ev.image} alt={ev.name} fill className="object-cover" />
-                    </div>
-                  ) : null}
-                  <div className="p-3 text-sm font-medium">{ev.name}</div>
-                </div>
+  {ev.image ? (
+    <div className="relative aspect-[4/3]">
+      <Image src={ev.image} alt={ev.name} fill className="object-cover" />
+      {ev.badgeText && (
+        <span
+          className={[
+            "absolute left-2 top-2 rounded-full px-2.5 py-0.5 text-[11px] font-semibold",
+            "uppercase tracking-wide text-white shadow-sm ring-1 ring-black/5",
+            badgeBg(ev.badgeVariant),
+          ].join(" ")}
+        >
+          {ev.badgeText}
+        </span>
+      )}
+    </div>
+  ) : null}
+  <div className="p-3 text-sm font-medium">{ev.name}</div>
+</div>
               </div>
             ))}
           </div>
@@ -130,18 +152,46 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
       ) : null}
 
 {/* TOP COWORKING SPACES */}
-<SectionHeading>TOP COWORKING SPACES</SectionHeading>
-<CityPlacesSection title="Top Coworking Spaces" places={city.coworking} hideTitle />
+<section className="my-8 rounded-3xl border p-6 md:p-8 ring-1" style={{ backgroundColor: "#FFF4E6", borderColor: "#F3E2C7" }}>
+  <SectionHeading compact>TOP COWORKING SPACES</SectionHeading>
+  <CityPlacesSection
+    title="Top Coworking Spaces"
+    places={city.coworking}
+    cityLabel="Tampa, FL"
+    bare                                  // 👈 only render the grid
+  />
+</section>
 
 {/* REMOTE WORKER FRIENDLY CAFES */}
-<SectionHeading>REMOTE WORKER FRIENDLY CAFES</SectionHeading>
-<CityPlacesSection title="Remote Worker Friendly Cafés" places={city.cafes} hideTitle />
-
-
-      
+<section className="my-8 rounded-3xl border p-6 md:p-8 ring-1" style={{ backgroundColor: "#FFF4E6", borderColor: "#F3E2C7" }}>
+  <SectionHeading compact>REMOTE WORKER FRIENDLY CAFES</SectionHeading>
+  <CityPlacesSection
+    title="Remote Worker Friendly Cafés"
+    places={city.cafes}
+    cityLabel="Tampa, FL"
+    bare
+  />
+</section>      
     </div>
   );
 }
+
+// helper for badge background color
+function badgeBg(variant?: string) {
+  switch (variant) {
+    case "green":
+      return "bg-emerald-600";
+    case "amber":
+      return "bg-amber-600";
+    case "sky":
+      return "bg-sky-600";
+    case "rose":
+      return "bg-rose-600";
+    default:
+      return "bg-slate-700";
+  }
+}
+
 
 function Underline() {
   return (
@@ -151,79 +201,102 @@ function Underline() {
   );
 }
 
-function SectionHeading({ children }: { children: React.ReactNode }) {
+function SectionHeading({
+  children,
+  compact = false,
+}: {
+  children: React.ReactNode;
+  compact?: boolean;
+}) {
   return (
-    <>
-      <h2 className="text-center font-display text-xl tracking-[.2em] text-slate-700">
+    <div className={`text-center ${compact ? "mb-3" : "mb-6"}`}>
+      <h2 className="font-display text-xl tracking-[.2em] text-slate-700">
         {children}
       </h2>
-      <Underline />
-    </>
+      <div className="mt-2 flex justify-center">
+        <span className="inline-block h-[2px] w-16 bg-[color:var(--warm-border)] rounded-full" />
+      </div>
+    </div>
   );
 }
 
 
+
 // --- Helper: image grid for coworking/cafés ---
-type CityPlace = {
-  name: string;
-  image: string;   // path under /public (starts with "/")
-  url?: string;    // optional external link
-};
+
 
 function CityPlacesSection({
   title,
   places = [],
-  hideTitle = false, 
+  cityLabel = "Tampa, FL",
+  hideTitle = false,
+  bare = false,                   
 }: {
   title: string;
-  places?: Place[];    // <- use Place from cities.ts (image?: string)
+  places?: Place[];
+  cityLabel?: string;
   hideTitle?: boolean;
+  bare?: boolean;                 
 }) {
   if (!places?.length) return null;
 
-  return (
-    <section className="mx-auto max-w-screen-2xl 2xl:max-w-[1600px] px-4 md:px-6 xl:px-12 py-10">
-      {!hideTitle && (
-        <>
-      <h2 className="mb-2 text-center font-display text-2xl md:text-3xl font-bold">{title}</h2>
-      <div className="mx-auto mb-8 h-1 w-16 rounded-full bg-slate-200" />
-      </>
-      )}
+  const Grid = (
+    <div className="mt-4 grid grid-cols-12 gap-5">
+      {places.map((p) => {
+        const href =
+          p.url ??
+          `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+            `${p.name} ${cityLabel}`
+          )}`;
 
-      <div className="grid grid-cols-12 gap-5">
-        {places.map((p) => (
+        return (
           <article key={p.name} className="col-span-12 sm:col-span-6 lg:col-span-3">
-            <div className="overflow-hidden rounded-xl border bg-white shadow-soft">
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open ${p.name} on Google Maps`}
+              className="group block cursor-pointer overflow-hidden rounded-xl border bg-white shadow-soft transition hover:shadow-md hover:-translate-y-[1px]"
+            >
               <div className="relative aspect-[4/3] w-full">
-                {p.image ? (
-                  <Image
-                    src={p.image}
-                    alt={p.name}
-                    fill
-                    className="object-cover transition-transform duration-300 hover:scale-105"
-                    sizes="(min-width:1280px) 25vw, (min-width:768px) 33vw, 100vw"
-                  />
-                ) : (
-                  <div className="absolute inset-0 grid place-items-center text-slate-400 text-sm">
-                    No image
-                  </div>
-                )}
+                <Image
+                  src={p.image!}
+                  alt={p.name}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  sizes="(min-width:1280px) 25vw, (min-width:768px) 33vw, 100vw"
+                />
               </div>
               <div className="p-3 text-center">
-                {p.url ? (
-                  <Link href={p.url} target="_blank" rel="noopener noreferrer" className="font-medium hover:underline">
-                    {p.name}
-                  </Link>
-                ) : (
-                  <span className="font-medium">{p.name}</span>
-                )}
+                <span className="font-medium group-hover:underline">{p.name}</span>
               </div>
-            </div>
+            </a>
           </article>
-        ))}
-      </div>
+        );
+      })}
+    </div>
+  );
+
+  if (bare) return Grid;  // 👈 return only the grid when used inside a panel
+
+  // original wrapped version (kept for reuse elsewhere)
+  return (
+    <section className="mx-auto max-w-screen-2xl 2xl:max-w-[1600px] px-4 md:px-6 xl:px-12 py-6">
+      {!hideTitle && (
+        <>
+          <h2 className="text-center font-display text-xl tracking-[.2em] text-slate-700">
+            {title.toUpperCase()}
+          </h2>
+          <div className="mt-2 flex justify-center">
+            <span className="inline-block h-[2px] w-20 bg-[color:var(--warm-border)] rounded-full" />
+          </div>
+        </>
+      )}
+      {Grid}
     </section>
   );
 }
+
+
 
 

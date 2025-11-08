@@ -7,9 +7,17 @@ export type City = {
   joinLink?: string;      // Lu.ma or membership link
   status: "live" | "soon";
   summary?: string;
-  events?: Place[];       // small thumbnails or links
+  events?: EventItem[];       // small thumbnails or links
   coworking?: Place[];
   cafes?: Place[];
+};
+
+
+export type EventItem = {
+  name: string;
+  image?: string;
+  badgeText?: string;        // ← NEW (text shown on badge)
+  badgeVariant?: "green" | "amber" | "sky" | "rose"; // ← NEW (color)
 };
 
 export const cities: Record<string, City> = {
@@ -22,17 +30,37 @@ export const cities: Record<string, City> = {
       subhead:
         "Connect with local remote workers, freelancers, and digital nomads.",
     },
-    lead: "Erkan",
+    lead: "Erkan Munishi",
     joinLink: "https://lu.ma/iworkremote",
     status: "live",
     summary:
       //"Our Tampa Bay chapter runs curated meetups and coworking sessions for real connections, not just Slack. Join brunch meetups, skill shares, and member-only events.",
-         "At iWorkRemote Tampa Bay, our events are curated exclusively for remote workers. Membership is by invitation only —ensuring a close-knit community of seasoned remote workers. However, if you’re an aspiring remote worker or hybrid professional, our open brunch meetups are the perfect introduction. Experience our vibrant community firsthand at brunch, and you might soon be invited to join our exclusive dinners, outdoor activities, and coworking sessions for deeper networking and special perks.",
+         "At iWorkRemote Tampa Bay, our events are curated exclusively for remote workers. Membership is by invitation only - ensuring a close-knit community of seasoned remote workers. However, if you’re an aspiring remote worker or hybrid professional, our open brunch meetups are the perfect introduction. Experience our vibrant community firsthand at brunch, and you might soon be invited to join our exclusive dinners, outdoor activities, and coworking sessions for deeper networking and special perks.",
     events: [
-      { name: "Brunch Meetup", image: "/cities/tampa/Brunch.jpg" },
-      { name: "Dinner", image: "/cities/tampa/Dinner.jpg" },
-      { name: "Outdoor Activities", image: "/cities/tampa/Outdoor.jpg" },
-      { name: "Coworking Session", image: "/cities/tampa/CoworkingSession.jpg" },
+      {
+        name: "Brunch Meetup",
+        image: "/cities/tampa/Brunch.jpg",
+        badgeText: "Non-members welcome",
+        badgeVariant: "green",
+      },
+      {
+        name: "Dinner",
+        image: "/cities/tampa/Dinner.jpg",
+        badgeText: "Members only",
+        badgeVariant: "amber",
+      },
+      {
+        name: "Outdoor Activities",
+        image: "/cities/tampa/Outdoor.jpg",
+        badgeText: "Members only",
+        badgeVariant: "amber",
+      },
+      {
+        name: "Coworking Session",
+        image: "/cities/tampa/CoworkingSession.jpg",
+        badgeText: "Members only",
+        badgeVariant: "amber",
+      },
     ],
     coworking: [
       { name: "Industrious Tampa", image: "/cities/tampa/IndustriousTampa.jpg" },
@@ -74,3 +102,7 @@ export const cities: Record<string, City> = {
 
 export const cityList = Object.values(cities);
 export const getCity = (slug: string) => cities[slug];
+
+
+
+

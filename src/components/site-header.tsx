@@ -23,8 +23,7 @@ export function SiteHeader() {
           <Link href="/"           className="hover:underline">Home</Link>
           <Link href="/chapters"   className="hover:underline">City Chapters</Link>
           <Link href="/membership" className="hover:underline">Membership</Link>
-          <Link href="/academy"    className="hover:underline">Academy</Link>
-          <Link href="/blog"       className="hover:underline">Blog</Link>
+          <Link href="/academy"    className="hover:underline">Academy</Link>   
           <a
             href="#subscribe"
             className="px-3 py-1 rounded-xl border shadow-soft transition
