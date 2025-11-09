@@ -54,3 +54,7 @@ body {
 
 /* Full-bleed helper: makes a block span the whole viewport width */
 .bleed { margin-inline: calc(50% - 50vw); width: 100vw; }
+
+html {
+  scroll-behavior: smooth;
+}

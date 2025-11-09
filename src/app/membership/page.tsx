@@ -36,9 +36,14 @@ export default function MembershipPage() {
                   </h1>
                   <p className="mt-2 text-white/90">The global network of remote workers.</p>
                   <div className="mt-4 flex items-center justify-center gap-3">
-                    <Link href="/chapters/tampa" className="btn-brand rounded-xl px-5 py-3">
-                      RSVP For Next Event
-                    </Link>
+                   <a
+                    href="https://luma.com/96ael9m4"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-brand rounded-xl px-5 py-3"
+                    >
+                     RSVP For Next Event
+                   </a>
                   </div>
                 </div>
               </div>

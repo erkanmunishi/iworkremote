@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCity, cityList } from "@/lib/cities";
 import type { Place } from "@/lib/cities";
+const RSVP_URL = "https://luma.com/96ael9m4";
 
 
 export const dynamicParams = false; // pre-render known cities
@@ -56,21 +57,33 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         {city.hero.subhead && (
           <p className="mt-2 text-white/90">{city.hero.subhead}</p>
         )}
-        <div className="mt-5 flex items-center justify-center gap-3">
-          {city.joinLink && (
-            <Link href={city.joinLink} className="btn-brand rounded-xl px-5 py-3">
-              {city.status === "live" ? "Join the Community" : "Get Notified"}
-            </Link>
-          )}
-          {city.status !== "live" && (
-            <Link
-              href="/membership"
-              className="rounded-xl border bg-white/90 px-5 py-3 shadow-soft text-slate-900"
-            >
-              Become a chapter lead →
-            </Link>
-          )}
-        </div>
+<div className="mt-5 flex items-center justify-center gap-3">
+  {slug === "tampa" ? (
+    <a
+      href={RSVP_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="btn-brand rounded-xl px-5 py-3"
+    >
+      Join the Community
+    </a>
+  ) : (
+    city.joinLink && (
+      <Link href={city.joinLink} className="btn-brand rounded-xl px-5 py-3">
+        {city.status === "live" ? "Join the Community" : "Get Notified"}
+      </Link>
+    )
+  )}
+
+  {city.status !== "live" && (
+    <Link
+      href="/membership"
+      className="rounded-xl border bg-white/90 px-5 py-3 shadow-soft text-slate-900"
+    >
+      Become a chapter lead →
+    </Link>
+  )}
+</div>
       </div>
     </div>
   </div>
@@ -106,10 +119,22 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
               <div className="text-sm text-slate-600">Lead</div>
               <div className="text-lg font-semibold">{city.lead ?? "TBD"}</div>
               {city.joinLink && (
-                <Link href={city.joinLink} className="btn-brand mt-3 inline-flex rounded-xl px-4 py-2 text-sm">
-                  {isLive ? "Events / Join" : "Join waitlist"}
-                </Link>
-              )}
+slug === "tampa" ? (
+<a
+  href={RSVP_URL}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="btn-brand mt-3 inline-flex rounded-xl px-4 py-2 text-sm"
+>
+  Events / Join
+</a>
+) : (
+<Link href={city.joinLink} className="btn-brand mt-3 inline-flex rounded-xl px-4 py-2 text-sm">
+  {isLive ? "Events / Join" : "Join waitlist"}
+</Link>
+)
+)}
+
             </div>
           </div>
         </div>
@@ -124,12 +149,62 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
           <Underline />
 
           <div className="mt-6 grid grid-cols-12 gap-6">
-            {city.events.map(ev => (
-              <div key={ev.name} className="col-span-12 sm:col-span-6 lg:col-span-3">
-                <div className="rounded-2xl border bg-white overflow-hidden shadow-soft">
-  {ev.image ? (
+  {city.events.map((ev) => {
+    const isBrunch =
+      /brunch/i.test(ev.name) || ev.badgeText?.toLowerCase() === "non-members welcome";
+
+    // Shared inner content (image + badge + name)
+    const CardInner = (
+      <>
+        {ev.image ? (
+          <div className="relative aspect-[4/3]">
+            <Image src={ev.image} alt={ev.name} fill className="object-cover" />
+            {/* optional gradient for readability */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/10 to-transparent" />
+            {ev.badgeText && (
+              <span
+                className={[
+                  "absolute left-2 top-2 rounded-full px-2.5 py-0.5 text-[11px] font-semibold",
+                  "uppercase tracking-wide text-white shadow-sm ring-1 ring-black/5",
+                  badgeBg(ev.badgeVariant),
+                ].join(" ")}
+              >
+                {ev.badgeText}
+              </span>
+            )}
+          </div>
+        ) : null}
+        <div className="p-3 text-sm font-medium">{ev.name}</div>
+      </>
+    );
+
+    return (
+      <div key={ev.name} className="col-span-12 sm:col-span-6 lg:col-span-3">
+        {isBrunch ? (
+  <a
+    href={RSVP_URL}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="RSVP for next event on Lu.ma"
+    className="group block cursor-pointer overflow-hidden rounded-2xl border bg-white shadow-soft transition
+               hover:shadow-md hover:-translate-y-[1px] focus:outline-none focus-visible:ring-2
+               focus-visible:ring-amber-400/60"
+  >
     <div className="relative aspect-[4/3]">
-      <Image src={ev.image} alt={ev.name} fill className="object-cover" />
+    {ev.image ? (
+      <Image
+        src={ev.image}
+        alt={ev.name}
+        fill
+        sizes="(min-width:1280px) 25vw, (min-width:768px) 33vw, 100vw"
+        className="object-cover transition-transform duration-300 motion-safe:group-hover:scale-105"
+      />
+    ) : (
+      <div className="h-full w-full bg-slate-100" />
+    )}
+      {/* optional gradient for readability */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/10 to-transparent" />
+
       {ev.badgeText && (
         <span
           className={[
@@ -141,13 +216,26 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
           {ev.badgeText}
         </span>
       )}
+      {/* subtle corner arrow on hover (optional) */}
+      <span
+        className="pointer-events-none absolute right-2 top-2 hidden rounded-full bg-white/90 px-2 py-1 text-[10px]
+                   font-medium text-slate-700 shadow-sm ring-1 ring-black/5 group-hover:inline"
+      >
+        RSVP ↗
+      </span>
     </div>
-  ) : null}
-  <div className="p-3 text-sm font-medium">{ev.name}</div>
+
+    <div className="p-3 text-sm font-medium text-center">
+      {ev.name}
+    </div>
+  </a>
+) : (
+  <div className="rounded-2xl border bg-white overflow-hidden shadow-soft">{CardInner}</div>
+)}
+      </div>
+    );
+  })}
 </div>
-              </div>
-            ))}
-          </div>
         </section>
       ) : null}
 
