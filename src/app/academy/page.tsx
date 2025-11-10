@@ -17,9 +17,9 @@ export default function AcademyPage() {
         <p className="mt-2 text-slate-600">Your future career starts here.</p>
 
         <p className="mt-4 mx-auto max-w-3xl text-[15px] leading-7 text-slate-600">
-          Whether you’re unemployed and seeking direction, or you’re ready to take the next step
-          in your journey, our Academy provides 1-on-1 support, AI-powered job search automation,
-          and real networking with people who’ve already done what you’re trying to do.
+          Whether you&rsquo;re unemployed and seeking direction&mdash;or you&rsquo;re ready to take the next step
+          in your journey&mdash;our Academy provides 1-on-1 support, AI-powered job search automation,
+          and real networking with people who&rsquo;ve already done what you&rsquo;re trying to do.
           <br className="hidden md:block" />
           <span className="font-medium text-slate-700">No fluff. Just results.</span>
         </p>
@@ -124,7 +124,7 @@ export default function AcademyPage() {
   </h2>
 
   <p className="mx-auto mt-2 max-w-2xl text-center text-[15px] leading-7 text-slate-700">
-    The Exploration Call helps us understand if you're a good fit for the program and how we can best
+    The Exploration Call helps us understand if you are a good fit for the program and how we can best
     support you. Expect a quick follow-up to schedule your 20-minute call.
   </p>
 
