@@ -2,10 +2,10 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { Inter, Outfit } from "next/font/google";
+//import { Inter, Outfit } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
+//const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+//const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.iworkremote.us"),

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { submitExploration } from "@/app/actions";
 
 export const metadata = {
@@ -156,7 +155,7 @@ export default function AcademyPage() {
     </label>
 
     <label className="text-sm text-slate-700">
-      What’s your career goal or challenge?
+      What&rsquo;s your career goal or challenge?
       <textarea
         name="goal"
         rows={4}
