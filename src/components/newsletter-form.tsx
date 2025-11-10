@@ -2,7 +2,7 @@ import { subscribeNewsletter } from "@/app/actions";
 
 export function NewsletterForm() {
   return (
-    <form action={subscribeNewsletter} className="flex w-full max-w-md gap-2">
+    <form action="/api/subscribe" method="post" className="flex w-full max-w-md gap-2">
       <input
         name="email"
         type="email"
