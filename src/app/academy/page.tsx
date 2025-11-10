@@ -133,7 +133,7 @@ export default function AcademyPage() {
 </p>
 
   
-  <form action={submitExploration} method="POST" className="mt-6 max-w-xl mx-auto grid gap-3 text-left">  
+  <form action={submitExploration} method="post" className="mt-6 max-w-xl mx-auto grid gap-3 text-left">  
     <label className="text-sm text-slate-700">
       Full Name
       <input

@@ -1,5 +1,3 @@
-"use client";
-// src/components/newsletter-form.tsx
 import { subscribeNewsletter } from "@/app/actions";
 
 export function NewsletterForm() {
