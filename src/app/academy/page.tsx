@@ -1,6 +1,5 @@
 import Link from "next/link";
-
-// src/app/academy/page.tsx
+import { submitExploration } from "@/app/actions";
 
 export const metadata = {
   title: "Academy",
@@ -119,7 +118,6 @@ export default function AcademyPage() {
         </div>
       </section>
 
-      {/* APPLY FORM */}
 {/* APPLY FORM */}
 <section id="explore-call" className="scroll-mt-28 mb-20">
   <h2 className="text-center font-display text-xl md:text-2xl font-bold">
@@ -135,12 +133,8 @@ export default function AcademyPage() {
   <span className="text-rose-700">🔒 Please note: We only accept a limited number of participants each period. Applications are reviewed to ensure a strong fit.</span>
 </p>
 
-  {/* Pure HTML form (no client handlers; safe for Server Components) */}
-  <form
-    action="#"
-    method="POST"
-    className="mt-6 max-w-xl mx-auto grid gap-3 text-left"
-  >
+  
+  <form action={submitExploration} method="POST" className="mt-6 max-w-xl mx-auto grid gap-3 text-left">  
     <label className="text-sm text-slate-700">
       Full Name
       <input

@@ -1,32 +1,24 @@
 "use client";
-import { useState } from "react";
+// src/components/newsletter-form.tsx
+import { subscribeNewsletter } from "@/app/actions";
 
 export function NewsletterForm() {
-  const [email, setEmail] = useState("");
-
   return (
-    <form
-      id="subscribe"
-      className="flex gap-2 justify-center"
-      action="#"
-      method="post"
-      onSubmit={(e) => {
-        e.preventDefault();
-        alert("Subscribed (we'll wire Beehiiv soon).");
-      }}
-    >
+    <form action={subscribeNewsletter} className="flex w-full max-w-md gap-2">
       <input
-        required
-        type="email"
         name="email"
-        placeholder="Enter your email"
-        className="max-w-sm w-full border rounded-lg px-3 py-2"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        type="email"
+        required
+        placeholder="you@example.com"
+        className="flex-1 rounded-xl border bg-white px-3 py-2 shadow-soft"
       />
-      <button type="submit" className="border rounded-lg px-4">
-        Join the list
+      <button
+        type="submit"
+        className="btn-brand rounded-xl px-4 py-2 text-sm shadow-soft"
+      >
+        Subscribe
       </button>
     </form>
   );
 }
+
