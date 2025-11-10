@@ -15,20 +15,7 @@ type SubscribePayload = {
 
 // Optional email via Resend (only if RESEND_API_KEY is set)
 async function maybeSendEmail(subject: string, html: string) {
-  const key = process.env.RESEND_API_KEY;
-  const to = process.env.FORMS_TO_EMAIL; // set this in Vercel, e.g. you@domain.com
-  if (!key || !to) return;
-
-  // Lazy import so build doesn’t require the dep if you don’t use it
-  const { Resend } = await import("resend");
-  const resend = new Resend(key);
-
-  await resend.emails.send({
-    from: "iWorkRemote <forms@iworkremote.us>",
-    to,
-    subject,
-    html,
-  });
+  return;
 }
 
 export async function submitExploration(formData: FormData) {
