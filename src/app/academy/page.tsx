@@ -116,7 +116,7 @@ export default function AcademyPage() {
       </section>
 
 {/* APPLY FORM */}
-<section id="explore-call" className="scroll-mt-28">
+<section id="explore-call" className="sscroll-mt-28 py-12 text-center">
         <h2 className="font-semibold text-lg">Apply for Your Free Exploration Call</h2>
         <p className="mt-2 text-slate-600 text-[15px]">
           The Exploration Call helps us understand if you&apos;re a good fit for the program and how we can best support you.
