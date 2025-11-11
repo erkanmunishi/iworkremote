@@ -1,5 +1,3 @@
-import { submitExploration } from "@/app/actions";
-
 export const metadata = {
   title: "Academy",
   description:
@@ -118,59 +116,21 @@ export default function AcademyPage() {
       </section>
 
 {/* APPLY FORM */}
-<section id="explore-call" className="scroll-mt-28 mb-20">
-  <h2 className="text-center font-display text-xl md:text-2xl font-bold">
-    Apply for Your Free Exploration Call
-  </h2>
+<section id="explore-call" className="scroll-mt-28">
+        <h2 className="font-semibold text-lg">Apply for Your Free Exploration Call</h2>
+        <p className="mt-2 text-slate-600 text-[15px]">
+          The Exploration Call helps us understand if you&apos;re a good fit for the program and how we can best support you.
+          Expect a quick follow-up to schedule your 20-minute call.
+        </p>
 
-  <p className="mx-auto mt-2 max-w-2xl text-center text-[15px] leading-7 text-slate-700">
-    The Exploration Call helps us understand if you are a good fit for the program and how we can best
-    support you. Expect a quick follow-up to schedule your 20-minute call.
-  </p>
+        <p className="mt-3 text-[13px] text-rose-600">
+          <span className="mr-1">🔒</span>
+          Please note: We only accept a limited number of participants each period. Applications are reviewed to ensure a strong fit.
+        </p>
 
-  <p className="mt-2 mx-auto max-w-2xl text-center text-[13px] leading-6">
-  <span className="text-rose-700">🔒 Please note: We only accept a limited number of participants each period. Applications are reviewed to ensure a strong fit.</span>
-</p>
-
-  
-  <form action="/api/exploration" method="post" className="mt-6 max-w-xl mx-auto grid gap-3 text-left">  
-    <label className="text-sm text-slate-700">
-      Full Name
-      <input
-        name="name"
-        type="text"
-        required
-        className="mt-1 w-full rounded-xl border bg-white px-3 py-2 shadow-soft"
-      />
-    </label>
-
-    <label className="text-sm text-slate-700">
-      Email Address
-      <input
-        name="email"
-        type="email"
-        required
-        className="mt-1 w-full rounded-xl border bg-white px-3 py-2 shadow-soft"
-      />
-    </label>
-
-    <label className="text-sm text-slate-700">
-      What&rsquo;s your career goal or challenge?
-      <textarea
-        name="goal"
-        rows={4}
-        className="mt-1 w-full rounded-xl border bg-white px-3 py-2 shadow-soft"
-      />
-    </label>
-
-    <button
-      type="submit"
-      className="btn-brand mt-3 w-auto justify-self-center self-center rounded-xl px-4 py-2 text-sm shadow-soft"
-    >
-      Submit
-    </button>
-  </form>
-</section>
+        {/* Formspree POST (no server code needed) */}
+        <FormspreeExplorationForm />
+      </section>
 
     </div>
   );
@@ -220,5 +180,70 @@ function PriceCard({
         {price}
       </div>
     </div>
+  );
+}
+
+
+function FormspreeExplorationForm() {
+  const ENDPOINT = process.env.NEXT_PUBLIC_FORMSPREE_EXPLORATION || "";
+  const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://iworkremote.us";
+  const disabled = !ENDPOINT;
+
+  return (
+    <form
+      action={ENDPOINT}
+      method="POST"
+      className="mt-6 max-w-xl mx-auto grid gap-3 text-left"
+    >
+      <label className="text-sm text-slate-700">
+        Full Name
+        <input
+          name="name"
+          type="text"
+          required
+          className="mt-1 w-full rounded-xl border bg-white px-3 py-2 shadow-soft"
+          disabled={disabled}
+        />
+      </label>
+
+      <label className="text-sm text-slate-700">
+        Email Address
+        <input
+          name="email"
+          type="email"
+          required
+          className="mt-1 w-full rounded-xl border bg-white px-3 py-2 shadow-soft"
+          disabled={disabled}
+        />
+      </label>
+
+      <label className="text-sm text-slate-700">
+        What’s your career goal or challenge?
+        <textarea
+          name="goal"
+          rows={4}
+          className="mt-1 w-full rounded-xl border bg-white px-3 py-2 shadow-soft"
+          disabled={disabled}
+        />
+      </label>
+
+      {/* Formspree helpers */}
+      <input type="hidden" name="_subject" value="Exploration Call Application — iWorkRemote" />
+      <input
+        type="hidden"
+        name="_redirect"
+        value={`${SITE}/thanks?status=ok&type=exploration`}
+      />
+      {/* Spam trap */}
+      <input type="text" name="_honeypot" className="hidden" tabIndex={-1} autoComplete="off" />
+
+      <button
+        type="submit"
+        className="btn-brand mt-2 inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm shadow-soft"
+        disabled={disabled}
+      >
+        Submit
+      </button>
+    </form>
   );
 }
