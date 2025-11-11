@@ -24,14 +24,12 @@ export function SiteHeader() {
           <Link href="/chapters"   className="hover:underline">City Chapters</Link>
           <Link href="/membership" className="hover:underline">Membership</Link>
           <Link href="/academy"    className="hover:underline">Academy</Link>   
-          <a
-            href="#subscribe"
-            className="px-3 py-1 rounded-xl border shadow-soft transition
-                       border-[color:var(--warm-border)]
-                       bg-white/80 hover:bg-white
-                       text-[color:var(--warm-ink)]">
+          <Link
+            href="/#subscribe"
+            className="btn-brand rounded-xl px-4 py-2 text-sm"
+          >
             Subscribe
-          </a>
+          </Link>
         </nav>
       </div>
     </header>

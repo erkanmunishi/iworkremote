@@ -85,10 +85,9 @@ export default function HomePage() {
                 Get event announcements and member resources in your inbox.
               </p>
             </div>
-            <div className="max-w-md md:ml-auto">
-              {/* Replace alert in NewsletterForm with Beehiiv action when ready */}
-              <NewsletterForm />
-            </div>
+            <section id="subscribe" className="scroll-mt-28 mt-10">
+               <NewsletterForm />
+            </section>
           </div>
         </div>
       </section>
